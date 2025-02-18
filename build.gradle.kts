@@ -1,17 +1,11 @@
 
-val kotlin_version: String by project
-val logback_version: String by project
-val exposedVersion: String by project
-val h2_version: String by project
-
 plugins {
-    kotlin("jvm") version "2.0.0"
-    id("io.ktor.plugin") version "2.3.11"
-    id("org.jetbrains.kotlin.plugin.serialization") version "2.0.0"
-    id("war")
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.ktor)
+    alias(libs.plugins.kotlin.plugin.serialization)
 }
 
-group = "com.mssql"
+group = "com.diffy"
 version = "0.0.1"
 
 application {
@@ -24,24 +18,29 @@ application {
 repositories {
     mavenCentral()
 }
-
+val versionSchemaKenerator="1.6.3"
 dependencies {
-    implementation("io.ktor:ktor-server-core-jvm")
-    implementation("io.ktor:ktor-serialization-kotlinx-json-jvm")
-    implementation("io.ktor:ktor-server-content-negotiation-jvm")
-    implementation("org.jetbrains.exposed:exposed-core:$exposedVersion")
-    implementation("org.jetbrains.exposed:exposed-jdbc:$exposedVersion")
-    implementation("com.h2database:h2:$h2_version")
-    implementation("io.ktor:ktor-server-netty-jvm")
-    implementation("ch.qos.logback:logback-classic:$logback_version")
-    implementation("io.ktor:ktor-server-config-yaml")
-    testImplementation("io.ktor:ktor-server-tests-jvm")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
-    implementation("com.microsoft.sqlserver:mssql-jdbc:6.4.0.jre7")
-    implementation("io.ktor:ktor-server-servlet-jakarta:$kotlin_version")
-    implementation("io.ktor:ktor-server-swagger:$kotlin_version")
+    implementation(libs.koin.ktor)
+    implementation(libs.koin.logger.slf4j)
+    implementation(libs.ktor.server.core)
+    implementation(libs.ktor.server.swagger)
+    implementation(libs.ktor.serialization.kotlinx.json)
+    implementation(libs.ktor.server.content.negotiation)
+    implementation(libs.exposed.core)
+    implementation(libs.exposed.jdbc)
+    implementation(libs.h2)
+    implementation(libs.ktor.server.netty)
+    implementation(libs.logback.classic)
+    implementation(libs.ktor.server.config.yaml)
+    implementation("org.jetbrains.exposed:exposed-java-time:0.58.0")
+    testImplementation(libs.ktor.server.test.host)
+    testImplementation(libs.kotlin.test.junit)
+    implementation(libs.ktor.server.status.pages)
+    implementation(libs.exposed.dao)
 
-}
-tasks.war{
-    archiveFileName = "TestWar.war"
+    implementation(libs.ktor.server.openapi)
+    implementation(libs.ktor.server.swagger)
+
+    implementation("com.microsoft.sqlserver:mssql-jdbc:12.8.1.jre11")
+
 }
