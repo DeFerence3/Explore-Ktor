@@ -1,6 +1,5 @@
 package routings
 
-import com.diffy.database.table.UserTable.age
 import database.service.UserService
 import dto.CommonResponse
 import dto.user.CreateUserDTO
