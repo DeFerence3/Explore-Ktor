@@ -1,6 +1,7 @@
 package com.diffy
 
 import com.diffy.routings.configureApplicationBusinessRoute
+import com.diffy.routings.configureJsonSaver
 import com.diffy.routings.configureSwagger
 import di.configureDependencyInjection
 import io.ktor.server.application.*
@@ -19,4 +20,5 @@ fun Application.module() {
     configureExceptionRouting()
     configureSwagger()
     configureApplicationBusinessRoute()
+    configureJsonSaver()
 }

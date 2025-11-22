@@ -4,3 +4,6 @@ ktor:
             - com.diffy.ApplicationKt.module
     deployment:
         port: 6969
+
+files:
+  jsonpath: "C:\\Uploads\\files\\json"
