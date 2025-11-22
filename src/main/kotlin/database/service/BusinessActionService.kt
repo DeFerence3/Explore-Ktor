@@ -11,7 +11,7 @@ import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
 
-class BusinessActionService {
+class BusinessActionService: ExposedGenericDAO<BusinessActionsTable, BusinessActionsEntity, Long>(BusinessActionsTable, BusinessActionsEntity) {
     init {
         transaction(database) {
             SchemaUtils.create(BusinessActionsTable)
@@ -28,7 +28,7 @@ class BusinessActionService {
 
             BusinessActionsEntity
                 .wrapRows(query)
-                .map { it.businessAction }
+                .map { it.accessKey }
         }
     }
 

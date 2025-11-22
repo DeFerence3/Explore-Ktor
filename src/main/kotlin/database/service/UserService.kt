@@ -2,13 +2,13 @@ package database.service
 
 import com.diffy.database.entity.UserEntity
 import com.diffy.database.entity.UserRoleEntity
-import com.diffy.database.service.GenericService
+import com.diffy.database.service.ExposedGenericDAO
 import com.diffy.database.table.UserRoleTable
 import com.diffy.database.table.UserTable
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
 
-class UserService{
+class UserService: ExposedGenericDAO<UserTable,UserEntity,Long>(UserTable,UserEntity){
 
     init {
         transaction {
@@ -39,9 +39,7 @@ class UserService{
 
     // Get a user by ID
     fun getUserById(userId: Long): UserEntity? {
-        return transaction {
-            UserEntity.findById(userId)
-        }
+        return getById(userId)
     }
 
     // Update a user
@@ -54,13 +52,6 @@ class UserService{
             isActive?.let { user.isActive = it }
             age?.let { user.age = it }
             roleId?.let { user.role = UserRoleEntity[it] }
-        }
-    }
-
-    // Delete a user
-    fun deleteUser(userId: Long) {
-        transaction {
-            UserEntity.findById(userId)?.delete()
         }
     }
 
@@ -77,7 +68,4 @@ class UserService{
             UserEntity.find { UserTable.role eq roleId }.toList()
         }
     }
-
-    fun getAll() = UserEntity.all()
-    fun getkjsdnf() = UserEntity.findById(2)
 }
